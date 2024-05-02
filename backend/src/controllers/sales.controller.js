@@ -1,8 +1,9 @@
-const conn = require('../db/index');
+const salesService = require('../services/sales.service');
 
+// Ainda não ta retornando o esperado
 const getSales = async (req, res) => {
-  const [rows] = await conn.query('SELECT * FROM sales_products'); // Preciso pegar a 'date' que se encontra no db 'sales'
-  res.status(200).json(rows);
+  const sales = await salesService.getSales();
+  return res.status(200).json(sales);
 };
 
 module.exports = {

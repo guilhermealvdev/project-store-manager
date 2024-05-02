@@ -14,3 +14,5 @@ module.exports = {
   getProductsId,
   getProducts,
 };
+
+// ORDER BY id ASC
