@@ -13,10 +13,10 @@ app.get('/', (_request, response) => {
 });
 
 app.get('/products', productsController.getProducts);
-
 app.get('/products/:id', productsController.getProductsId);
 
 app.get('/sales', productsSales.getSales);
+app.get('/sales/:id', productsSales.getSaleById);
 
 module.exports = app;
 
