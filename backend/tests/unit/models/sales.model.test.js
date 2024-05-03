@@ -40,4 +40,23 @@ describe('Teste de Sales na Camada Model', function () {
     // Assert / Expect
     expect(result).to.be.an('array');
   });
+
+  it('Teste function  getSalesById com id 2', async function () {
+    // Arranjo
+    const saleId = 2;
+    const expectedProduct = {
+      saleId: 2,
+      date: '2024-05-03T17:34:35.000Z',
+      productId: 3,
+      quantity: 15,
+    };
+    
+    sinon.stub(conexao, 'query').resolves([expectedProduct]); // mais um []?
+
+    // Ação
+    const result = await salesModel.getSaleById(saleId);
+
+    // Assert / Expect
+    expect(result).to.be.an('object');
+  });
 });
