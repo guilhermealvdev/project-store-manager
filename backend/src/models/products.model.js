@@ -15,4 +15,4 @@ module.exports = {
   getProducts,
 };
 
-// ORDER BY id ASC
+// ORDER BY id ASC (não precisou)

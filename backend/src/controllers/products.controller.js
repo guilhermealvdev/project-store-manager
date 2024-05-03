@@ -15,6 +15,8 @@ const getProductsId = async (req, res) => {
   return res.status(200).json(product[0]); // Caso exista volta a primeira posição
 };
 
+// const getProducts = async (req, res) => res.status(200).json({ message: 'Teste' });
+
 module.exports = {
   getProducts,
   getProductsId,
