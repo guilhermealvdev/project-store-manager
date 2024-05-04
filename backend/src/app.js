@@ -18,6 +18,8 @@ app.get('/products/:id', productsController.getProductsId);
 app.get('/sales', productsSales.getSales);
 app.get('/sales/:id', productsSales.getSaleById);
 
+app.post('/products', productsController.postProducts);
+
 module.exports = app;
 
 // Iniciando Projeto

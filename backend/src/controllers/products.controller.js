@@ -17,7 +17,11 @@ const getProductsId = async (req, res) => {
 
 // const getProducts = async (req, res) => res.status(200).json({ message: 'Teste' });
 
+// Iniciando Req 3
+const postProducts = async (req, res) => res.status(200).json({ message: 'A FAZER' });
+
 module.exports = {
   getProducts,
   getProductsId,
+  postProducts,
 };
