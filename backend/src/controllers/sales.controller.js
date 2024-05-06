@@ -23,6 +23,13 @@ const getSaleById = async (req, res) => {
 
 const createSale = async (req, res) => {
   const newSale = req.body;
+  // Validação
+  if (newSale.some((item) => !item.productId)) {
+    return res.status(400).json({ message: '"productId" is required' });
+  }
+  if (newSale.some((item) => !item.quantity)) {
+    return res.status(400).json({ message: '"quantity" is required' });
+  }
   // await validateSale(newSale); Função para validar os dados aqui?
   console.log('Alv, vendo valor de newSale (controller):');
   console.log(newSale);
