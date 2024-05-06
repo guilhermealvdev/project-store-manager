@@ -21,5 +21,3 @@ app.get('/sales/:id', productsSales.getSaleById);
 app.post('/products', productsController.postProducts);
 
 module.exports = app;
-
-// Iniciando Projeto

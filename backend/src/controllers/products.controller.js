@@ -1,5 +1,4 @@
 const productsService = require('../services/products.service');
-// const modeltext = require('../models/products.model');
 
 const getProducts = async (req, res) => {
   const products = await productsService.getProducts();
@@ -16,13 +15,21 @@ const getProductsId = async (req, res) => {
   return res.status(200).json(product[0]); // Caso exista volta a primeira posição
 };
 
-// const getProducts = async (req, res) => res.status(200).json({ message: 'Teste' });
-
 // Iniciando Req 3
 
 const postProducts = async (req, res) => {
   // Extrair o nome do produto do corpo da requisição
   const { name } = req.body;
+
+  // Verificar se o campo name está presente na requisição
+  if (!name) {
+    return res.status(400).json({ message: '"name" is required' });
+  }
+  
+  // Verificar se o campo name tem pelo menos 5 caracteres
+  if (name.length < 5) {
+    return res.status(422).json({ message: '"name" length must be at least 5 characters long' });
+  }
 
   // Criar um novo produto no banco de dados
   const newProduct = await productsService.postProduct(name);

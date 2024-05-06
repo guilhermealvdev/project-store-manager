@@ -9,17 +9,17 @@ chai.use(chaiHttp);
 const { assert, expect } = chai;
 
 const sinon = require('sinon');
-const productsService = require('../../../src/services/products.service');
-const productsController = require('../../../src/controllers/products.controller');
+const salesService = require('../../../src/services/sales.service');
+const salesController = require('../../../src/controllers/sales.controller');
 
-describe('Teste de Products na Camada Controller', function () {
+describe('Teste de Sales na Camada Controller', function () {
   afterEach(function () {
     sinon.restore(); // Restaurar os stubs após cada teste
   });
 
-  it('Deve chamar productsController.getProducts e retorna status 200', async function () {
+  it('Deve chamar salesController.getSales e retorna status 200', async function () {
     // Arranjo
-    const getProductsServiceStub = sinon.stub(productsService, 'getProducts').resolves([]);
+    const getSalesServiceStub = sinon.stub(salesService, 'getSales').resolves([]);
 
     // Simula a requisição e a resposta
     const req = {};
@@ -29,10 +29,10 @@ describe('Teste de Products na Camada Controller', function () {
     };
 
     // Ação
-    await productsController.getProducts(req, res);
+    await salesController.getSales(req, res);
 
     // Assert
-    assert.isTrue(getProductsServiceStub.calledOnce);
+    assert.isTrue(getSalesServiceStub.calledOnce);
     expect(res.status).to.have.been.calledWith(200);
   });
 });
