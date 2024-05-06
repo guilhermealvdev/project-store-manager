@@ -21,7 +21,17 @@ const getSaleById = async (req, res) => {
   return res.status(200).json(saleWithoutSaleId); // Troquei 'sale' por 'saleWithoutSaleId' para nao ter o saleId no objeto
 };
 
+const createSale = async (req, res) => {
+  const newSale = req.body;
+  // await validateSale(newSale); Função para validar os dados aqui?
+  console.log('Alv, vendo valor de newSale (controller):');
+  console.log(newSale);
+  const saleRegistered = await salesService.createSale(newSale);
+  res.status(201).json(saleRegistered);
+};
+
 module.exports = {
   getSales,
   getSaleById,
+  createSale,
 };
