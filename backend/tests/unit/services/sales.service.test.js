@@ -19,4 +19,17 @@ describe('Teste de Sales na Camada Service', function () {
     // Assert / Expect
     assert.isTrue(getSalesModelStub.calledOnce);
   });
+
+  it('Teste se getSaleById do service chama getSalesId do model', async function () {
+    // Arranjo
+    const saleId = 1;
+    const getSalesModelStub = sinon.stub(salesModel, 'getSaleById').resolves([]);
+
+    // Ação
+    await salesService.getSaleById(saleId);
+
+    // Assert
+    assert.isTrue(getSalesModelStub.calledOnceWith(saleId));
+    // Igual no teste anterior, nao funcionou com 'expect', usei assert novamente.
+  });
 });

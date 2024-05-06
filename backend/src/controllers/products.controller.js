@@ -1,4 +1,5 @@
 const productsService = require('../services/products.service');
+// const modeltext = require('../models/products.model');
 
 const getProducts = async (req, res) => {
   const products = await productsService.getProducts();
@@ -18,7 +19,17 @@ const getProductsId = async (req, res) => {
 // const getProducts = async (req, res) => res.status(200).json({ message: 'Teste' });
 
 // Iniciando Req 3
-const postProducts = async (req, res) => res.status(200).json({ message: 'A FAZER' });
+
+const postProducts = async (req, res) => {
+  // Extrair o nome do produto do corpo da requisição
+  const { name } = req.body;
+
+  // Criar um novo produto no banco de dados
+  const newProduct = await productsService.postProduct(name);
+
+  // Retornar o objeto do produto criado com o status HTTP 201
+  res.status(201).json(newProduct);
+};
 
 module.exports = {
   getProducts,
