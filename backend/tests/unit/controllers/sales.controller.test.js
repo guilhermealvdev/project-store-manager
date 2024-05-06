@@ -35,4 +35,24 @@ describe('Teste de Sales na Camada Controller', function () {
     assert.isTrue(getSalesServiceStub.calledOnce);
     expect(res.status).to.have.been.calledWith(200);
   });
+
+  // NOT ME
+  it('Deve retornar status 404 quando a venda não existe para getSaleById', async function () {
+    // Arranjo
+    sinon.stub(salesService, 'getSaleById').resolves([]);
+
+    // Simula a requisição e a resposta
+    const req = { params: { id: 999 } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    // Ação
+    await salesController.getSaleById(req, res);
+
+    // Assert
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+  });
 });
