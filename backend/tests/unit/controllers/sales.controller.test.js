@@ -12,6 +12,8 @@ const sinon = require('sinon');
 const salesService = require('../../../src/services/sales.service');
 const salesController = require('../../../src/controllers/sales.controller');
 
+const { validacaoCreateSale } = require('../../../src/middlewares/validacaoCreateSale');
+
 describe('Teste de Sales na Camada Controller', function () {
   afterEach(function () {
     sinon.restore(); // Restaurar os stubs após cada teste
@@ -54,5 +56,53 @@ describe('Teste de Sales na Camada Controller', function () {
     // Assert
     expect(res.status).to.have.been.calledWith(404);
     expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+  });
+
+  it('Deve retornar status 400 se o campo "productId" estiver ausente em algum item', async function () {
+    // Arranjo
+    const req = { body: [{ quantity: 2 }] }; // Simula uma requisição com o campo "productId" ausente
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    // Ação
+    await validacaoCreateSale(req, res, () => {});
+
+    // Assert
+    expect(res.status).to.have.been.calledWith(400);
+    expect(res.json).to.have.been.calledWith({ message: '"productId" is required' });
+  });
+
+  it('Deve retornar status 400 se o campo "quantity" estiver ausente em algum item', async function () {
+    // Arranjo
+    const req = { body: [{ productId: 1 }] }; // Simula uma requisição com o campo "quantity" ausente
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    // Ação
+    await validacaoCreateSale(req, res, () => {});
+
+    // Assert
+    expect(res.status).to.have.been.calledWith(400);
+    expect(res.json).to.have.been.calledWith({ message: '"quantity" is required' });
+  });
+
+  it('Deve retornar status 422 se a quantidade for menor ou igual a zero', async function () {
+    // Arranjo
+    const req = { body: [{ productId: 1, quantity: 0 }] }; // Simula uma requisição com quantidade menor ou igual a zero
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    // Ação
+    await validacaoCreateSale(req, res, () => {});
+
+    // Assert
+    expect(res.status).to.have.been.calledWith(422);
+    expect(res.json).to.have.been.calledWith({ message: '"quantity" must be greater than or equal to 1' });
   });
 });
