@@ -26,9 +26,11 @@ const createSale = async (req, res) => {
   /*
     Validação (Parte da validação está em um middleware e outra parte abaixo.
     Isso porque estava dando erro de lint de complexidade maior que 5
-    ASSIM PASSA O 5, MAS NÃO PASSA O 6
   */
-  if (newSale.length >= 1 && newSale.productId === null) {
+  if (newSale.length === 1 && !newSale.productId) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
+  if (newSale.length >= 1 && !newSale.productId) {
     return res.status(404).json({ message: 'Product not found' });
   }
   console.log('Alv, vendo valor de newSale (controller):');

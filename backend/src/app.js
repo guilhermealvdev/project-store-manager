@@ -20,6 +20,7 @@ app.get('/sales', salesController.getSales);
 app.get('/sales/:id', salesController.getSaleById);
 
 app.post('/products', productsController.postProducts);
+// app.post('/sales', salesController.createSale);
 app.post('/sales', validacaoCreateSale, salesController.createSale);
 
 // Req 7
