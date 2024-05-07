@@ -15,10 +15,17 @@ async function postProduct(name) {
   return { id: result.insertId, name }; // Retorna o ID gerado e o nome do produto
 }
 
+const updateProduct = async (productId, name) => {
+  const id = Number(productId);
+  await conn.query('UPDATE products SET name = ? WHERE id = ?', [name, id]);
+  return { id, name };
+};
+
 module.exports = {
   getProductsId,
   getProducts,
   postProduct,
+  updateProduct,
 };
 
 // ORDER BY id ASC (não precisou)

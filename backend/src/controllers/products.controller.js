@@ -38,8 +38,36 @@ const postProducts = async (req, res) => {
   res.status(201).json(newProduct);
 };
 
+const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  // Verificar se o campo name está presente na requisição
+  if (!name) {
+    return res.status(400).json({ message: '"name" is required' });
+  }
+  
+  // Verificar se o campo name tem pelo menos 5 caracteres
+  if (name.length < 5) {
+    return res.status(422).json({ message: '"name" length must be at least 5 characters long' });
+  }
+
+  // Verificar se o produto existe
+  const existingProduct = await productsService.getProductsId(id);
+  if (existingProduct.length === 0) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
+
+  // Atualizar o produto no banco de dados
+  const updatedProduct = await productsService.updateProduct(id, name);
+
+  // Retornar o objeto do produto atualizado com o status HTTP 200
+  res.status(200).json(updatedProduct);
+};
+
 module.exports = {
   getProducts,
   getProductsId,
   postProducts,
+  updateProduct,
 };

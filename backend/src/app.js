@@ -22,4 +22,9 @@ app.get('/sales/:id', salesController.getSaleById);
 app.post('/products', productsController.postProducts);
 app.post('/sales', validacaoCreateSale, salesController.createSale);
 
+// Req 7
+app.put('/products/:id', productsController.updateProduct);
+
+// Req 8 - A FAZER
+
 module.exports = app;
