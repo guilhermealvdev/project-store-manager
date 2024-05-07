@@ -128,4 +128,44 @@ describe('Teste de Products na Camada Controller', function () {
     expect(res.status).to.have.been.calledWith(422);
     expect(res.json).to.have.been.calledWith({ message: '"name" length must be at least 5 characters long' });
   });
+
+  it('Deve retornar status 404 quando tentar deletar um produto que não existe', async function () {
+    // Arranjo
+    sinon.stub(productsService, 'getProductsId').resolves([]);
+  
+    // Simula a requisição e a resposta
+    const req = { params: { id: 999 } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+  
+    // Ação
+    await productsController.deleteProduct(req, res);
+  
+    // Assert
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+  });
+  
+  it('Deve retornar status 204 quando deletar um produto com sucesso', async function () {
+    // Arranjo
+    const productMock = { id: 1, name: 'Martelo de Thor' };
+    sinon.stub(productsService, 'getProductsId').resolves([productMock]);
+    const deleteProductStub = sinon.stub(productsService, 'deleteProduct');
+  
+    // Simula a requisição e a resposta
+    const req = { params: { id: 1 } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      sendStatus: sinon.stub(),
+    };
+  
+    // Ação
+    await productsController.deleteProduct(req, res);
+  
+    // Assert
+    expect(deleteProductStub).to.have.been.calledWith(1);
+    expect(res.sendStatus).to.have.been.calledWith(204);
+  });
 });

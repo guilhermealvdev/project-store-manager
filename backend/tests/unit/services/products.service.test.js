@@ -1,6 +1,6 @@
 // const { expect } = require('chai');
 const sinon = require('sinon');
-const { assert } = require('chai');
+const { assert, expect } = require('chai');
 
 const productsModel = require('../../../src/models/products.model');
 const productsService = require('../../../src/services/products.service');
@@ -34,5 +34,26 @@ describe('Teste de Products na Camada Service', function () {
     // Assert
     assert.isTrue(getProductsIdModelStub.calledOnceWith(productId));
     // Igual no teste anterior, nao funcionou com 'expect', usei assert novamente.
+  });
+  it('Deve chamar productsService.deleteProduct corretamente', async function () {
+    // Arranjo
+    const deleteProductStub = sinon.stub(productsModel, 'deleteProduct');
+  
+    // Ação
+    await productsService.deleteProduct(1);
+  
+    // Assert
+    expect(deleteProductStub).to.have.been.calledWith(1);
+  });
+  
+  it('Deve chamar productsService.updateProduct corretamente', async function () {
+    // Arranjo
+    const updateProductStub = sinon.stub(productsModel, 'updateProduct');
+  
+    // Ação
+    await productsService.updateProduct(1, 'Martelo de Thor');
+  
+    // Assert
+    expect(updateProductStub).to.have.been.calledWith(1, 'Martelo de Thor');
   });
 });

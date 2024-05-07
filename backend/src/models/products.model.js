@@ -21,11 +21,16 @@ const updateProduct = async (productId, name) => {
   return { id, name };
 };
 
+const deleteProduct = async (id) => {
+  await conn.query('DELETE FROM products WHERE id = ?', [id]);
+};
+
 module.exports = {
   getProductsId,
   getProducts,
   postProduct,
   updateProduct,
+  deleteProduct,
 };
 
 // ORDER BY id ASC (não precisou)

@@ -105,4 +105,27 @@ describe('Teste de Sales na Camada Controller', function () {
     expect(res.status).to.have.been.calledWith(422);
     expect(res.json).to.have.been.calledWith({ message: '"quantity" must be greater than or equal to 1' });
   });
+
+  // //////////////////////////////////////////////////////////////////////
+
+  it('Deve criar uma nova venda com sucesso', async function () {
+    // Arranjo
+    const newSale = { items: [{ productId: 1, quantity: 2 }] }; // Simula uma requisição com dados válidos
+    const saleRegisteredMock = { id: 1, ...newSale }; // Mock do retorno da venda registrada
+    sinon.stub(salesService, 'createSale').resolves(saleRegisteredMock);
+  
+    // Simula a requisição e a resposta
+    const req = { body: newSale };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+  
+    // Ação
+    await salesController.createSale(req, res);
+  
+    // Assert
+    expect(res.status).to.have.been.calledWith(201);
+    expect(res.json).to.have.been.calledWith(saleRegisteredMock);
+  });
 });

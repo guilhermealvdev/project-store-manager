@@ -25,6 +25,7 @@ app.post('/sales', validacaoCreateSale, salesController.createSale);
 // Req 7
 app.put('/products/:id', productsController.updateProduct);
 
-// Req 8 - A FAZER
+// Req 8
+app.delete('/products/:id', productsController.deleteProduct);
 
 module.exports = app;

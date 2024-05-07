@@ -62,4 +62,25 @@ describe('Teste de Products na Camada Model', function () {
     // Assert / Expect
     expect(result).to.deep.equal([]);
   });
+  it('Deve chamar a query correta para deletar um produto', async function () {
+    // Arranjo
+    const queryStub = sinon.stub(conexao, 'query');
+
+    // Ação
+    await productsModel.deleteProduct(1);
+
+    // Assert
+    expect(queryStub).to.have.been.calledWith('DELETE FROM products WHERE id = ?', [1]);
+  });
+
+  it('Deve chamar a query correta para atualizar um produto', async function () {
+    // Arranjo
+    const queryStub = sinon.stub(conexao, 'query');
+
+    // Ação
+    await productsModel.updateProduct(1, 'Martelo de Thor');
+
+    // Assert
+    expect(queryStub).to.have.been.calledWith('UPDATE products SET name = ? WHERE id = ?', ['Martelo de Thor', 1]);
+  });
 });
